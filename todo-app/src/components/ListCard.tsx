@@ -6,17 +6,14 @@ function NumberInput(
     { num,index,setLockTime,changeLockTime }: 
     {   num: number,
         index?:number,
-        setLockTime?:ListCardProps["updateLockTime"],
+        setLockTime?:(newLockTime: number)=>void,
         changeLockTime?:ListCardProps["updateLockTime"],} ){
     const handleDecrement = () => {
-        if (num - 1 < 0) {
-            return
-        }
-        if (changeLockTime) {
+        if (changeLockTime && num != 0) {
             changeLockTime(index!,num - 1)
         }
-        if (setLockTime) {
-            setLockTime(index!,num - 1);
+        if (setLockTime&& num != 0) {
+            setLockTime(num - 1);
         }
     };
     const handleIncrement = () => {
@@ -24,27 +21,27 @@ function NumberInput(
             changeLockTime(index!,num + 1)
         }
         if (setLockTime) {
-            setLockTime(index!,num + 1);
+            setLockTime(num + 1);
         }
     };
 
     const handleChange = (event: { target: { value: string; }; }) => {
         const newValue = parseInt(event.target.value, 10);
         if (!isNaN(newValue)) {
-            setLockTime!(index!,newValue);
+            setLockTime?.(newValue);
         }
       };
 
     return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
-        <button onClick={handleDecrement} >-</button>
+        <button onClick={handleDecrement} style={{width:'25px'}} >-</button>
         <input 
             type="number" 
             value={num} 
             onChange={handleChange} 
-            style={{ width: '50px', textAlign: 'center',border:'0' }} 
+            style={{ width: '30px', textAlign: 'center',border:'0' }} 
         />
-        <button onClick={handleIncrement} >+</button>
+        <button onClick={handleIncrement} style={{width:'25px'}} >+</button>
         </div>
     );
 }
@@ -84,6 +81,9 @@ function ListCard({info,index,empty,updateTodos,updateLockTime,updatedescription
     function EmptyCard() {
         const [description, setDescription] = useState<string>('');
         const [lockTime, setLockTime] = useState<number>(0);
+
+        console.log(lockTime);
+        
         return (
             <>
             <div className="emptycard">

@@ -17,6 +17,12 @@ const initialState: TodosState = {
     { description: "事务3", completed: false, lockTime: 1 },
     { description: "事务4", completed: false, lockTime: 5 },
     { description: "事务5", completed: false, lockTime: 1 },
+    { description: "事务6", completed: false, lockTime: 1 },
+    { description: "事务7", completed: false, lockTime: 5 },
+    { description: "事务8", completed: false, lockTime: 1 },
+    { description: "事务9", completed: false, lockTime: 1 },
+    { description: "事务10", completed: false, lockTime: 5 },
+    { description: "事务11", completed: false, lockTime: 1 },
   ]
 };
 
@@ -40,9 +46,13 @@ const todosSlice = createSlice({
         const todo = state.todos[index];
         todo.completed = !todo.completed;
         todo.lockTime = 0;  // 重置 lockTime
+    },
+    removeTodoItem(state,action: PayloadAction<{ index: number}>){
+      const {index} = action.payload
+      state.todos.splice(index,1)
     }
   }
 });
 
-export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted} = todosSlice.actions;
+export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem} = todosSlice.actions;
 export default todosSlice.reducer;
