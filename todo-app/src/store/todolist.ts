@@ -24,11 +24,11 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    changeLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
+    reviseLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
         const { index, newLockTime } = action.payload;
         state.todos[index].lockTime = newLockTime;
     },
-    changeDescription(state, action: PayloadAction<{ index: number, description: string }>) {
+    reviseDescription(state, action: PayloadAction<{ index: number, description: string }>) {
         const { index, description } = action.payload;
         state.todos[index].description = description;
     },
@@ -44,5 +44,5 @@ const todosSlice = createSlice({
   }
 });
 
-export const { changeLockTime ,changeDescription,newTodoItem,toggleTodoCompleted} = todosSlice.actions;
+export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted} = todosSlice.actions;
 export default todosSlice.reducer;

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ListCardProps } from "../type/datatype";
-import "./card.less"
+import "./card.css"
 
 function NumberInput(
     { num,index,setLockTime,changeLockTime }: 
