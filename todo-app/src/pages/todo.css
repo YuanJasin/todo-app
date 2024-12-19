@@ -1,0 +1,35 @@
+.subtitle{
+    margin-left: 30px;
+    margin-right: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    color: blueviolet;
+}
+
+.content {
+    margin: 30px;
+    height: 450px;
+    overflow: auto;
+    scrollbar-width: none; 
+}
+
+.content::-webkit-scrollbar {
+    display: none; 
+}
+
+.newitem{
+    margin: 30px 10px 10px 10px;
+}
+
+.line{
+    border-top: 1px dashed #6495ed;
+}
+
+.count{
+    display: flex;
+    justify-content:space-between;
+    color: blueviolet;
+    font-size: 26px;
+    margin: 25px 30px 0 30px;
+}

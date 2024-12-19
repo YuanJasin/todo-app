@@ -1,0 +1,19 @@
+body{
+    margin: 0;
+    color: cornflowerblue;
+     background-color: #F6F6F6;
+}
+
+.title{
+    display: flex;
+    margin: 40px;
+    justify-content: space-around;
+    color:cornflowerblue;
+    font-weight: bold;
+    .todo{
+        font-size: 20px;
+    }
+    .schedule{
+        font-size: 20px;
+    }
+}
