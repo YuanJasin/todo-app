@@ -7,9 +7,6 @@ import {useTodoHandlers} from "../tool/operation-data"
 import { sliceList } from "../tool/process";
 
 function Schedule() {
-    // 1.显示今天和明天两个代办数组
-    // 2.除去两个数组外，超过的数据将继续延后到后一天
-    // 3.每天的任务数量不超过八小时
     const {
         todolist,
         changeLockTimeHandler,

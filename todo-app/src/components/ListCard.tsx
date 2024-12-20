@@ -82,7 +82,7 @@ function ListCard({info,index,empty,updateTodos,updateLockTime,updatedescription
         const [description, setDescription] = useState<string>('');
         const [lockTime, setLockTime] = useState<number>(0);
 
-        console.log(lockTime);
+
         
         return (
             <>
