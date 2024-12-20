@@ -1,9 +1,12 @@
 import todostyle from "./todo.module.css"
 import ListCard from "../components/ListCard"
-import { Fragment } from "react"
+import { Fragment, useEffect } from "react"
 import {TodoItem} from "../type/datatype"
 import { Divider } from 'antd';
 import {useTodoHandlers} from "../tool/operation-data"
+import { useRequet } from "../api/useRequest";
+import { useDispatch } from "react-redux";
+import { setTodos } from "../store/todolist";
 
 
 function Count({list}:{list:TodoItem[]}) {
@@ -31,6 +34,18 @@ function Todo(){
         newTodoItemHandler,
     } = useTodoHandlers();
 
+    /* 此处为获取接口数据的代码 */
+    // const dispatch = useDispatch()
+
+    // const getlist = async () => {
+    //     const initialState = await useRequet().getTodos()
+    //     dispatch(setTodos(initialState.data))
+    // }
+
+    // useEffect(() => {
+    //     getlist()
+    // })
+
     return(
         <> 
             <h1 className={todostyle.subtitle}>To-do list</h1>
@@ -41,7 +56,7 @@ function Todo(){
                             <Fragment key={index}>
                                 <ListCard 
                                     key={index}
-                                    info={item}
+                                    item={item}
                                     index={index} 
                                     todo = {true}
                                     empty={false}

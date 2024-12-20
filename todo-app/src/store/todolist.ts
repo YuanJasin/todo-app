@@ -10,6 +10,7 @@ interface TodosState {
   todos: TodoItem[];
 }
 
+
 const initialState: TodosState = {
   todos: [
     { description: "事务1事务1事务1事务1事务1事务1", completed: false, lockTime: 1 },
@@ -26,10 +27,14 @@ const initialState: TodosState = {
   ]
 };
 
+
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    setTodos(state, action: PayloadAction<TodoItem[]>) {
+      state.todos = action.payload;
+    },
     reviseLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
         const { index, newLockTime } = action.payload;
         state.todos[index].lockTime = newLockTime;
@@ -45,14 +50,19 @@ const todosSlice = createSlice({
         const index = action.payload;
         const todo = state.todos[index];
         todo.completed = !todo.completed;
-        todo.lockTime = 0;  // 重置 lockTime
+        todo.lockTime = 0; 
     },
     removeTodoItem(state,action: PayloadAction<{ index: number}>){
       const {index} = action.payload
       state.todos.splice(index,1)
+    },
+    updateTodoOrder(state, action: PayloadAction<{ fromIndex: number, toIndex: number }>) {
+      const { fromIndex, toIndex } = action.payload;
+      const [movedTodo] = state.todos.splice(fromIndex, 1);  
+      state.todos.splice(toIndex, 0, movedTodo); 
     }
   }
 });
 
-export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem} = todosSlice.actions;
+export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem,updateTodoOrder,setTodos} = todosSlice.actions;
 export default todosSlice.reducer;

@@ -1,21 +1,21 @@
 import { TodoItem } from "./datatype";
 
 /* 任务列表响应 */
-export interface GetTodoListResponse{
+export type GetTodoListResponse = {
     data:TodoItem[]
 }
 
 /* 创建任务成功 */
-export interface CreateTodoItemResponse{
-    data:TodoItem
+export type CreateTodoItemResponse = {
+    success:boolean
 }
 
 /* 更新任务成功 */
-export interface UpdateTodoItemResponse{
+export type UpdateTodoItemResponse = {
     data:TodoItem
 }
 
 /* 更新日程成功 */
-export interface UpdateScheduleItemResponse{
-    
+export type UpdateScheduleItemResponse = {
+    success:boolean
 }

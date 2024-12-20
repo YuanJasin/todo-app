@@ -3,9 +3,7 @@ import { useState } from "react"
 import "./App.css"
 import Schedule from "./pages/schedulepage"
 import Todo from "./pages/todopage"
-import { DndProvider } from 'react-dnd';
-import { TouchBackend } from 'react-dnd-touch-backend';
-import { HTML5Backend } from "react-dnd-html5-backend";
+
 
 function App() {
   const [todopage,setTodopage] = useState(true)
@@ -18,11 +16,8 @@ function App() {
     </div>
       {todopage ? 
         <Todo/> 
-      : 
-      <DndProvider backend={HTML5Backend }>
-      {/* <DndProvider backend={TouchBackend }> */}
+      :
       <Schedule/>
-      </DndProvider>
       }
     </>
   )

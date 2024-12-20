@@ -10,7 +10,7 @@ export interface CreateTodoItem{
 
 /* 更新任务 */
 export interface UpdateTodoItem{
-    id: string;
+    id: number;
     data:{
         description?: string;
         completed?: boolean;
@@ -18,13 +18,9 @@ export interface UpdateTodoItem{
     }
 }
 
-/* 更新日程 */
+/* 更新拖拽日程 */
 export interface UpdateScheduleItem {
-    date:string,
-    data:{
-        description?: string;
-        completed?: boolean;
-        lockTime?:number;
-    }
+    formIndex:number,
+    targetIndex:number
 }
 
