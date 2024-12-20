@@ -30,6 +30,7 @@ function Todo(){
         changeDescriptionHandler,
         newTodoItemHandler,
     } = useTodoHandlers();
+
     return(
         <> 
             <h1 className={todostyle.subtitle}>To-do list</h1>
@@ -39,8 +40,10 @@ function Todo(){
                         return(
                             <Fragment key={index}>
                                 <ListCard 
+                                    key={index}
                                     info={item}
                                     index={index} 
+                                    todo = {true}
                                     empty={false}
                                     updateTodos={changeItemState}
                                     updateLockTime={changeLockTimeHandler}
@@ -57,6 +60,8 @@ function Todo(){
             <div className={todostyle.newitem}>
             <ListCard 
                     empty={true}
+                    todo = {false}
+                    index={0} // 此处可以传任何值，这不会用到index
                     updateTodos={newTodoItemHandler}
             />
             </div>

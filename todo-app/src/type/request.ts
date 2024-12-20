@@ -20,5 +20,11 @@ export interface UpdateTodoItem{
 
 /* 更新日程 */
 export interface UpdateScheduleItem {
+    date:string,
+    data:{
+        description?: string;
+        completed?: boolean;
+        lockTime?:number;
+    }
 }
 

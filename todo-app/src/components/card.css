@@ -4,8 +4,9 @@
     justify-content: space-between;
     align-items: center;   
     text-align: center;   
+    border-radius: 15px;
     padding: 10px;
-    border: 10px #6495ed;
+
     .select{
         width: 30px;
         height: 30px;

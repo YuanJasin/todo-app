@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ListCardProps } from "../type/datatype";
+import { ItemTypes, ListCardProps } from "../type/datatype";
 import "./card.css"
+import { useDrag } from "react-dnd";
 
 function NumberInput(
     { num,index,setLockTime,changeLockTime }: 
@@ -46,16 +47,39 @@ function NumberInput(
     );
 }
 
-function ListCard({info,index,empty,updateTodos,updateLockTime,updatedescription}:ListCardProps) {
+function ListCard({info,index,empty,todo,updateTodos,updateLockTime,updatedescription}:ListCardProps) {
+    // const ref = React.useRef<HTMLDivElement>(null)
 
-    function Card() { 
+    // // 拖拽
+    // const [{ isDragging }, drag] = useDrag(() => ({
+    //     type: ItemTypes.CARD,
+    //     item: { index },
+    //     collect: (monitor) => ({
+    //       isDragging: !!monitor.isDragging(),
+    //     }),
+    // }));
+
+    // // 放置
+    // const [, drop] = useDrop(() => ({
+    //     accept: ItemTypes.CARD,
+    //     hover: (item: { index: number }) => {
+    //     console.log(`Hovering item at index ${item.index} over index ${index}`);
+    //       if (item.index !== index) {
+    //         moveCard!(item.index, index);
+    //         item.index = index; 
+    //       }
+    //     }
+    // }));
+
+    // drag(drop(ref));
+    function Card({index}:{index:number}) { 
         if (!info) {
             return null;
         }
         return (
             <>
-            <div className="card">
-                <div  onClick={() => (updateTodos as (index: number) => void)(index!)}>
+            <div draggable className="card">
+                <div  onClick={() => (updateTodos as (index: number,bol:boolean)=> void)(index,todo)} >
                     {info.completed ? 
                         <div className="selected"/> : <div className="select"/>
                     }
@@ -80,10 +104,7 @@ function ListCard({info,index,empty,updateTodos,updateLockTime,updatedescription
 
     function EmptyCard() {
         const [description, setDescription] = useState<string>('');
-        const [lockTime, setLockTime] = useState<number>(0);
-
-
-        
+        const [lockTime, setLockTime] = useState<number>(0);  
         return (
             <>
             <div className="emptycard">
@@ -112,10 +133,26 @@ function ListCard({info,index,empty,updateTodos,updateLockTime,updatedescription
 
     return (
         <>
-       {    
-        empty ? 
-        <EmptyCard/>:<Card/>
-       }
+            {    
+                empty ? 
+                <EmptyCard/>
+                :
+                <div 
+                // ref={ref}
+                // style={{
+                //     opacity: isDragging ? 0.5 : 1,
+                //     marginBottom: '8px',
+                //     cursor: 'move',
+                //     backgroundColor:isDragging ? '#333' : '#F6F6F6',
+                //     boxShadow: isDragging ? '0px 4px 10px rgba(0, 0, 0, 0.25)': "none", // 拖拽时显示阴影
+                //     transform: isDragging ? 'scale(1.05)' : 'scale(1)', // 拖拽时稍微放大
+                //     transition: 'box-shadow 0.2s, transform 0.2s', // 平滑过渡
+                // }}
+                >
+                    <Card index={index}/>
+                </div>
+            }
+        
         </>
     )
 }

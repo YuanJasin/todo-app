@@ -12,9 +12,15 @@ export const useTodoHandlers = () => {
     };
 
     /* 修改Item状态(完成/未完成) */
-    const changeItemState = (index:number) => {
+    const changeItemState = (index:number,todo:boolean) => {
         dispatch(toggleTodoCompleted(index));
-        dispatch(removeTodoItem({index}))
+        if (todo) {
+            setTimeout(() => {
+                dispatch(removeTodoItem({index}))
+            }, 2000);
+        }else{
+            dispatch(removeTodoItem({index}))
+        }
     }
     /* 修改待办事务的描述 */
     const changeDescriptionHandler = (index:number,description:string) => {

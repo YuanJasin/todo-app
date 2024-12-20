@@ -1,5 +1,4 @@
 import { TodoItem } from "../type/datatype"
-import { Fragment } from "react/jsx-runtime";
 import ListCard from "../components/ListCard"
 import schstyle from "./schedule.module.css"
 import { Divider } from 'antd';
@@ -14,7 +13,7 @@ function Schedule() {
         changeDescriptionHandler,
     } = useTodoHandlers();
     
-    const todaylist = sliceList(todolist)
+    const todaylist = sliceList(todolist);
 
     function TodayList({list}:{list:Record<string, TodoItem[]>}) {
         return (
@@ -25,17 +24,18 @@ function Schedule() {
                             <div className={schstyle.targettime}>{date}</div>
                             {items.map((item,index) => {
                                 return(
-                                    <Fragment key={index}>
+                                    <div draggable key={index}>
                                         <ListCard 
                                             info={item}
                                             index={index} 
                                             empty={false}
+                                            todo = {false}
                                             updateTodos={changeItemState}
                                             updateLockTime={changeLockTimeHandler}
                                             updatedescription={changeDescriptionHandler}
                                     />
                                     <Divider style={{ borderColor: '#6495ed' ,margin:"0"}}/>
-                                    </Fragment>
+                                    </div>
                                 )
                         })
                     }
