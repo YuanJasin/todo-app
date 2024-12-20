@@ -56,20 +56,25 @@ export const sliceList = (data: TodoItem[]): Record<string, TodoItem[]> => {
   const result: Record<string, TodoItem[]> = {};
 
   let currentDate = new Date();
-  let targetlist: TodoItem[] = []
-  let count: number = 0
+  let targetlist: TodoItem[] = [];
+  let count: number = 0;
 
   for (const item of data) {
+    // 跳过 lockTime === 0 的项
+    if (item.lockTime === 0) {
+      continue;
+    }
+
     if (item.lockTime > 8) {
       // 如果 lockTime > 8，将其单独放入当前日期的数组，独占一天
       const dateKey = getFormattedDate(currentDate);
       result[dateKey] = [item];
-      // / 日期延申
+      // 日期延申
       currentDate.setDate(currentDate.getDate() + 1);
     } else {
       // 累计 lockTime
       count += item.lockTime;
-      if (count <= 8 && item.lockTime !== 0) {
+      if (count <= 8) {
         // 如果总和不超过 8，继续添加
         targetlist.push(item);
       } else {
@@ -85,10 +90,12 @@ export const sliceList = (data: TodoItem[]): Record<string, TodoItem[]> => {
       }
     }
   }
+
+  // 保存最后一个组
   if (targetlist.length > 0) {
     const dateKey = getFormattedDate(currentDate);
     result[dateKey] = targetlist;
   }
 
   return result;
-}
+};
