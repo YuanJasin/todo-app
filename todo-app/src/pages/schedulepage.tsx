@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import DraggableTodoItem from "../components/draggableCard";
 import { Fragment } from "react/jsx-runtime";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 
 function Schedule() {
@@ -19,6 +19,10 @@ function Schedule() {
     } = useTodoHandlers();
     
     const [todaylist,setList] = useState(sliceList(todolist));
+
+    useEffect(() => {
+        setList(sliceList(todolist));
+    }, [todolist]);
 
 
     function TodayList({list}:{list:Record<string, TodoItem[]>}) {
