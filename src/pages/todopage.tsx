@@ -1,12 +1,12 @@
 import todostyle from "./todo.module.css"
 import ListCard from "../components/ListCard"
-import { Fragment, useEffect } from "react"
+import {Fragment, useEffect} from "react"
 import {TodoItem} from "../type/datatype"
 import { Divider } from 'antd';
 import {useTodoHandlers} from "../tool/operation-data"
-import { useRequet } from "../api/useRequest";
-import { useDispatch } from "react-redux";
-import { setTodos } from "../store/todolist";
+import {useDispatch, useSelector} from "react-redux";
+import {AppDispatch, RootState} from '../store/store.ts';
+import {fetchTodos} from "../store/todolist.ts";
 
 
 function Count({list}:{list:TodoItem[]}) {
@@ -25,6 +25,7 @@ function Count({list}:{list:TodoItem[]}) {
     )
 }
 
+
 function Todo(){
     const {
         todolist,
@@ -34,30 +35,25 @@ function Todo(){
         newTodoItemHandler,
     } = useTodoHandlers();
 
-    /* 此处为获取接口数据的代码 */
-    // const dispatch = useDispatch()
+    const dispatch:AppDispatch = useDispatch();
+    const todos = useSelector((state: RootState) => state.todos.todos);
 
-    // const getlist = async () => {
-    //     const initialState = await useRequet().getTodos()
-    //     dispatch(setTodos(initialState.data))
-    // }
-
-    // useEffect(() => {
-    //     getlist()
-    // })
+    useEffect(() => {
+        dispatch(fetchTodos());
+    }, [dispatch]);
 
     return(
         <> 
             <h1 className={todostyle.subtitle}>To-do list</h1>
             <div className={todostyle.content}>
                 {
-                    todolist.map((item,index) => {
+                    todos.map((item,index) => {
                         return(
                             <Fragment key={index}>
-                                <ListCard 
+                                <ListCard
                                     key={index}
                                     item={item}
-                                    index={index} 
+                                    index={index}
                                     todo = {true}
                                     empty={false}
                                     updateTodos={changeItemState}
@@ -73,7 +69,7 @@ function Todo(){
             <hr className={todostyle.line}></hr>
             <Count list={todolist}/>
             <div className={todostyle.newitem}>
-            <ListCard 
+            <ListCard
                     empty={true}
                     todo = {false}
                     index={0} // 此处可以传任何值，这不会用到index

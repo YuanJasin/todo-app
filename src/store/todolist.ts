@@ -1,40 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface TodoItem {
-  description: string;
-  completed: boolean;
-  lockTime: number;
-}
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {TodoItem} from "../type/datatype.ts";
+import {getTodos} from "../api/useRequest.ts";
 
 interface TodosState {
   todos: TodoItem[];
 }
 
-
 const initialState: TodosState = {
-  todos: [
-    { description: "事务1事务1事务1事务1事务1事务1", completed: false, lockTime: 1 },
-    { description: "事务2", completed: false, lockTime: 2 },
-    { description: "事务3", completed: false, lockTime: 1 },
-    { description: "事务4", completed: false, lockTime: 5 },
-    { description: "事务5", completed: false, lockTime: 1 },
-    { description: "事务6", completed: false, lockTime: 1 },
-    { description: "事务7", completed: false, lockTime: 5 },
-    { description: "事务8", completed: false, lockTime: 1 },
-    { description: "事务9", completed: false, lockTime: 1 },
-    { description: "事务10", completed: false, lockTime: 5 },
-    { description: "事务11", completed: false, lockTime: 1 },
-  ]
+  todos: []
 };
+
+export const fetchTodos = createAsyncThunk<TodoItem[]>(
+    'todos/fetchTodos',
+    async () => {
+      const response = await getTodos()
+        return response.data.filter(item => !item.completed);
+    }
+);
 
 
 const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    setTodos(state, action: PayloadAction<TodoItem[]>) {
-      state.todos = action.payload;
-    },
     reviseLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
         const { index, newLockTime } = action.payload;
         state.todos[index].lockTime = newLockTime;
@@ -61,8 +49,17 @@ const todosSlice = createSlice({
       const [movedTodo] = state.todos.splice(fromIndex, 1);  
       state.todos.splice(toIndex, 0, movedTodo); 
     }
-  }
+  },
+  extraReducers: (builder) => {
+    builder
+        .addCase(fetchTodos.fulfilled, (state, action) => {
+          state.todos = action.payload;
+        })
+        .addCase(fetchTodos.rejected, () => {
+          console.error('Failed to fetch todos.');
+        });
+  },
 });
 
-export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem,updateTodoOrder,setTodos} = todosSlice.actions;
+export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem,updateTodoOrder} = todosSlice.actions;
 export default todosSlice.reducer;

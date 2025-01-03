@@ -5,7 +5,7 @@ export interface TodoItem {
     lockTime:number;
 }
 
-// listcard接收props
+// listCard接收props
 export interface ListCardProps {
     empty:boolean;
     updateTodos: ((index: number,bol:boolean)=> void)|((description:string,lockTime:number) => void);
