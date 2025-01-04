@@ -47,14 +47,14 @@ function NumberInput(
 }
 
 function ListCard({item,index,empty,todo,updateTodos,updateLockTime,updatedescription}:ListCardProps) {
-    function Card({index}:{index:number}) { 
+    function Card({index}:{index?:number}) {
         if (!item) {
             return null;
         }
         return (
             <>
             <div className="card">
-                <div  onClick={() => (updateTodos as (index: number,bol:boolean)=> void)(index,todo)} >
+                <div  onClick={() => (updateTodos as (index: number,bol:boolean)=> void)(index!,todo)} >
                     {item.completed ? 
                         <div className="selected"/> : <div className="select"/>
                     }
@@ -83,7 +83,7 @@ function ListCard({item,index,empty,todo,updateTodos,updateLockTime,updatedescri
         return (
             <>
             <div className="emptycard" draggable="true">
-                <div className="plus"onClick={() => (updateTodos as (description: string, lockTime: number) => void)(description, lockTime!)}/> 
+                <div className="plus"onClick={() => (updateTodos as (description: string, lockTime: number) => void)(description, lockTime!)}/>
                 {/* description 输入框 */}
                 <div>
                     <textarea

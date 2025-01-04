@@ -14,7 +14,7 @@ export const fetchTodos = createAsyncThunk<TodoItem[]>(
     'todos/fetchTodos',
     async () => {
       const response = await getTodos()
-        return response.data.filter(item => !item.completed);
+        return response.data!.filter(item => !item.completed);
     }
 );
 
@@ -25,11 +25,19 @@ const todosSlice = createSlice({
   reducers: {
     reviseLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
         const { index, newLockTime } = action.payload;
-        state.todos[index].lockTime = newLockTime;
+        state.todos.forEach((v) => {
+            if (v.id === index) {
+                v.lockTime = newLockTime;
+            }
+        })
     },
     reviseDescription(state, action: PayloadAction<{ index: number, description: string }>) {
         const { index, description } = action.payload;
-        state.todos[index].description = description;
+        state.todos.forEach((v) => {
+            if (v.id === index) {
+                v.description = description;
+            }
+        })
     },
     newTodoItem(state, action: PayloadAction<TodoItem>) {
         state.todos.push(action.payload);

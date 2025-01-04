@@ -5,7 +5,7 @@ import { updateTodoOrder } from "../store/todolist";
 import { useDispatch } from 'react-redux';
 
 
-function DraggableTodoItem({ item,index,date,changeTodos,updateTodos,updateLockTime,updatedescription}:draggableProps) {
+function DraggableTodoItem({ item,index,id,date,changeTodos,updateTodos,updateLockTime,updatedescription}:draggableProps) {
     const dispatch = useDispatch();
 
     const [_,dragRef] = useDrag({
@@ -44,7 +44,7 @@ function DraggableTodoItem({ item,index,date,changeTodos,updateTodos,updateLockT
         <div ref={(node) => dragRef(dropRef(node))} key={index}>
             <ListCard
                 item={item}
-                index={index}
+                index={id}
                 empty={false}
                 todo={false}
                 updateTodos={updateTodos}

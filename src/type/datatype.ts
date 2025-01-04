@@ -3,13 +3,14 @@ export interface TodoItem {
     description: string;
     completed: boolean;
     lockTime:number;
+    id?: number;
 }
 
 // listCard接收props
 export interface ListCardProps {
     empty:boolean;
     updateTodos: ((index: number,bol:boolean)=> void)|((description:string,lockTime:number) => void);
-    index: number;
+    index?: number;
     todo:boolean,
     date?:string,
     item?: {
@@ -29,6 +30,7 @@ export interface draggableProps{
       lockTime:number;
     },
     index:number,
+    id?: number,
     date:string,
     changeTodos:(draggedIndex: number, draggedDate: string, targetDate: string, targetIndex: number, draggedItemData: TodoItem) => void;
     updateTodos: ((index: number,bol:boolean)=> void)|((description:string,lockTime:number) => void);

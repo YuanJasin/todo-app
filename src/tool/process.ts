@@ -53,9 +53,10 @@ const getDaySuffix = (day: number): string => {
 
 /* 对于目标条件条件的时间截取 */
 export const sliceList = (data: TodoItem[]): Record<string, TodoItem[]> => {
+  console.log("-----调用sliceList-----")
   const result: Record<string, TodoItem[]> = {};
 
-  let currentDate = new Date();
+  const currentDate = new Date();
   let targetlist: TodoItem[] = [];
   let count: number = 0;
 

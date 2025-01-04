@@ -1,88 +1,74 @@
 import { useDispatch,useSelector } from "react-redux";
-import { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem} from '../store/todolist';
+import { reviseLockTime,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem} from '../store/todolist';
 import {TodoItem} from "../type/datatype"
-import {createTodo} from "../api/useRequest.ts";
+import {createTodo, updateTodo} from "../api/useRequest.ts";
 
 export const useTodoHandlers = () => {
     const todolist = useSelector((state: { todos: { todos: TodoItem[] } }) => state.todos.todos);
     const dispatch = useDispatch();
 
     /* 修改Item的lockTime状态 */
-    const changeLockTimeHandler =  (index: number, newLockTime: number) => {
-        /* 接口调用代码 */
-        // const params = {
-        //     id:index,
-        //     data:{
-        //         lockTime:newLockTime
-        //     }
-        // }
-        // const success = await useRequet().updateTodo(params)
-        // if (success) {
-        //     console.log("修改成功");
-        //     dispatch(reviseLockTime({index,newLockTime}))
-        // }else{
-        //     console.log("修改失败"); 
-        // }
-        
-        dispatch(reviseLockTime({index,newLockTime}))
+    const changeLockTimeHandler =  async (index: number, newLockTime: number) => {
+        const params = {
+            id: index,
+            data: {
+                lockTime: newLockTime,
+                completed: false,
+            }
+        }
+        const success = await updateTodo(params)
+        if (success) {
+            console.log("修改成功");
+            dispatch(reviseLockTime({index, newLockTime}));
+        } else {
+            console.error("修改失败");
+        }
     };
 
     /* 修改Item状态(完成/未完成) */
-    const changeItemState =  (index:number,todo:boolean) => {
-        /* 接口调用代码 */
-        // const params = {
-        //     id:index,
-        //     data:{
-        //         completed:todo
-        //     }
-        // }
-        // const success = await useRequet().updateTodo(params)
-        // if (success) {
-        //     console.log("修改成功");
-        //     dispatch(toggleTodoCompleted(index));
-        //     if (todo) {
-        //         setTimeout(() => {
-        //             dispatch(removeTodoItem({index}))
-        //         }, 2000);
-        //     }else{
-        //         dispatch(removeTodoItem({index}))
-        //     }
-        // }else{
-        //     console.log("修改失败"); 
-        // }
-        dispatch(toggleTodoCompleted(index));
-        if (todo) {
-            setTimeout(() => {
+    const changeItemState =  async (index: number, itemState: boolean) => {
+        const params = {
+            id: index,
+            data: {
+                completed: itemState,
+            }
+        }
+        const success = await updateTodo(params)
+        if (success) {
+            console.log("修改成功");
+            dispatch(toggleTodoCompleted(index));
+            if (itemState) {
+                setTimeout(() => {
+                    dispatch(removeTodoItem({index}))
+                }, 2000);
+            }else{
                 dispatch(removeTodoItem({index}))
-            }, 2000);
+            }
         }else{
-            dispatch(removeTodoItem({index}))
+            console.error("修改失败");
         }
     }
+
     /* 修改待办事务的描述 */
-    const changeDescriptionHandler = (index:number,description:string) => {
-        /* 接口调用代码 */
-        // const params = {
-        //     id:index,
-        //     data:{
-        //         description:description
-        //     }
-        // }
-        // const success = await useRequet().updateTodo(params)
-        // if (success) {
-        //     console.log("修改成功");
-        //     dispatch(reviseDescription({ index, description }));
-        //     }else{
-        //         dispatch(removeTodoItem({index}))
-        //     }
-        // }else{
-        //     console.log("修改失败"); 
-        // }
-        dispatch(reviseDescription({ index, description }));
+    const changeDescriptionHandler = async (index: number, description: string) => {
+        const params = {
+            id: index,
+            data: {
+                description: description,
+                completed: false,
+            }
+        }
+        const success = await updateTodo(params)
+        if (success) {
+            console.log("修改成功");
+            dispatch(reviseDescription({index, description}));
+        } else {
+            console.log("修改失败");
+        }
     }
 
-    /* 添加一个新的item代办事件 */
-    async function newTodoItemHandler(description: string, lockTime: number) {
+    /* 添加一个新的代办事件 */
+    const newTodoItemHandler =  async (description: string, lockTime: number) => {
         const exists = todolist.some((item) => item.description === description);
         if (exists) {
             console.log("在列表中已经存在该任务");

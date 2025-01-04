@@ -55,6 +55,7 @@ function Schedule() {
                                                 key={date + index}
                                                 item={item}
                                                 index={index}
+                                                id={item.id}
                                                 date={date}
                                                 changeTodos={updateTodos}
                                                 updateTodos={changeItemState}

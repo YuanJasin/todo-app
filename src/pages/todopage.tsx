@@ -53,7 +53,7 @@ function Todo(){
                                 <ListCard
                                     key={index}
                                     item={item}
-                                    index={index}
+                                    index={item.id}
                                     todo = {true}
                                     empty={false}
                                     updateTodos={changeItemState}
@@ -66,17 +66,20 @@ function Todo(){
                     })
                 }
             </div>
-            <hr className={todostyle.line}></hr>
-            <Count list={todolist}/>
-            <div className={todostyle.newitem}>
-            <ListCard
-                    empty={true}
-                    todo = {false}
-                    index={0} // 此处可以传任何值，这不会用到index
-                    updateTodos={newTodoItemHandler}
-            />
+            <div className={todostyle.foot}>
+                <hr className={todostyle.line}></hr>
+                <Count list={todolist}/>
+                <div className={todostyle.newitem}>
+                    <ListCard
+                        empty={true}
+                        todo={false}
+                        index={0} // 此处可以传任何值，这不会用到index
+                        updateTodos={newTodoItemHandler}
+                    />
+                </div>
             </div>
         </>
     )
 }
+
 export default Todo;
