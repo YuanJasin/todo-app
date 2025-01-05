@@ -23,6 +23,9 @@ const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+      setTodos(state, action: PayloadAction<TodoItem[]>) {
+          state.todos = action.payload;
+          },
     reviseLockTime(state, action: PayloadAction<{ index: number, newLockTime: number }>) {
         const { index, newLockTime } = action.payload;
         state.todos.forEach((v) => {
@@ -44,18 +47,25 @@ const todosSlice = createSlice({
     },
     toggleTodoCompleted(state, action: PayloadAction<number>) {
         const index = action.payload;
-        const todo = state.todos[index];
-        todo.completed = !todo.completed;
-        todo.lockTime = 0; 
+        state.todos.forEach((v) => {
+            if (v.id === index) {
+                v.completed = !v.completed;
+                v.lockTime = 0;
+            }
+        })
     },
-    removeTodoItem(state,action: PayloadAction<{ index: number}>){
-      const {index} = action.payload
-      state.todos.splice(index,1)
+    removeTodoItem(state,action: PayloadAction<number>){
+      const id = action.payload
+       state.todos.forEach((v,i) => {
+           if (v.id === id) {
+               state.todos.splice(i,1)
+           }
+       })
     },
-    updateTodoOrder(state, action: PayloadAction<{ fromIndex: number, toIndex: number }>) {
-      const { fromIndex, toIndex } = action.payload;
-      const [movedTodo] = state.todos.splice(fromIndex, 1);  
-      state.todos.splice(toIndex, 0, movedTodo); 
+    updateTodoOrder(state, action: PayloadAction<{ fromId: number, targetId: number }>) {
+      const { fromId, targetId } = action.payload;
+      const [movedTodo] = state.todos.splice(fromId, 1);
+      state.todos.splice(targetId, 0, movedTodo);
     }
   },
   extraReducers: (builder) => {
@@ -69,5 +79,5 @@ const todosSlice = createSlice({
   },
 });
 
-export const { reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem,updateTodoOrder} = todosSlice.actions;
+export const {setTodos, reviseLockTime ,reviseDescription,newTodoItem,toggleTodoCompleted,removeTodoItem,updateTodoOrder} = todosSlice.actions;
 export default todosSlice.reducer;

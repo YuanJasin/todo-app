@@ -11,8 +11,8 @@ export interface UpdateTodoItem{
 
 /* 更新拖拽日程 */
 export interface UpdateScheduleItem {
-    formIndex:number,
-    targetIndex:number
+    fromId?:number,
+    targetId?:number
 }
 
 // 创建事务类型

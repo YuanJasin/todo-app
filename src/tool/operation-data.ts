@@ -39,10 +39,10 @@ export const useTodoHandlers = () => {
             dispatch(toggleTodoCompleted(index));
             if (itemState) {
                 setTimeout(() => {
-                    dispatch(removeTodoItem({index}))
+                    dispatch(removeTodoItem(index))
                 }, 2000);
             }else{
-                dispatch(removeTodoItem({index}))
+                dispatch(removeTodoItem(index))
             }
         }else{
             console.error("修改失败");
@@ -95,7 +95,8 @@ export const useTodoHandlers = () => {
             console.log("创建失败",error);
         }
     }
-        return {
+
+    return {
             todolist,
             changeLockTimeHandler,
             changeItemState,

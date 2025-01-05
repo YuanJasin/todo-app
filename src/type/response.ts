@@ -24,5 +24,6 @@ export type UpdateTodoItemResponse = {
 
 /* 更新日程成功 */
 export type UpdateScheduleItemResponse = {
+    data:TodoItem[]
     success:boolean
 }

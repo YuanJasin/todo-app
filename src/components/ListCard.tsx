@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, {useCallback, useState} from "react";
 import { ListCardProps } from "../type/datatype";
 import "./card.css"
+import { debounce } from 'lodash'
 
 function NumberInput(
     { num,index,setLockTime,changeLockTime }: 
@@ -48,9 +49,25 @@ function NumberInput(
 
 function ListCard({item,index,empty,todo,updateTodos,updateLockTime,updatedescription}:ListCardProps) {
     function Card({index}:{index?:number}) {
+
+        const [desc, setDescription] = useState(item!.description);
+
+        const debouncedChangeDescription = useCallback(
+            debounce((index: number, description: string) => {
+                updatedescription!(index, description);  // 延迟提交描述
+            }, 2000), // 延迟 2 秒
+            []  // 只在组件初次渲染时创建防抖函数
+        );
+
         if (!item) {
             return null;
         }
+
+        const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            setDescription(e.target.value); // 更新本地状态，保证输入框值即时更新
+            debouncedChangeDescription(index!, e.target.value); // 调用防抖函数处理最终的更新
+        };
+
         return (
             <>
             <div className="card">
@@ -63,8 +80,8 @@ function ListCard({item,index,empty,todo,updateTodos,updateLockTime,updatedescri
                     rows={3}
                     cols={50}
                      className="input"
-                     value={item.description}
-                     onChange={(e) => updatedescription!(index!,e.target.value)}  
+                     value={desc}
+                     onChange={handleChange}
                      placeholder="Enter description"
                 />
                 <NumberInput 
