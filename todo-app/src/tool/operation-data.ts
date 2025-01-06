@@ -22,8 +22,12 @@ export const useTodoHandlers = () => {
         // }else{
         //     console.log("修改失败"); 
         // }
-        
-        dispatch(reviseLockTime({index,newLockTime}))
+        if (newLockTime === 0) {
+            dispatch(removeTodoItem({index}))
+        }else {
+            dispatch(reviseLockTime({index,newLockTime}))
+        }
+
     };
 
     /* 修改Item状态(完成/未完成) */

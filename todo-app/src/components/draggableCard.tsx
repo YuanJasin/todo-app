@@ -20,22 +20,11 @@ function DraggableTodoItem({ item,index,date,changeTodos,updateTodos,updateLockT
             // 实现交换或更新不同列表中的项目的逻辑
             changeTodos(draggedIndex, draggedDate, date, index, draggedItemData);
             if (draggedIndex !== index) {
-                /* 接口调用代码 */
-                // const params = {
-                //     formIndex:draggedIndex,
-                //     targetIndex:index,
-                // }
-                // const success = await useRequet().updateSchedule(params)
-                // if (success) {
-                //     console.log("修改成功");
-                //     dispatch(reviseLockTime({index,newLockTime}))
-                // }else{
-                //     console.log("修改失败"); 
-                // }
                 dispatch(updateTodoOrder({
                     fromIndex: draggedIndex,
                     toIndex: index
                 }));
+                console.log(test)
             }
         },
     });

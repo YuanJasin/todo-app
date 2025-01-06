@@ -17,13 +17,13 @@ const initialState: TodosState = {
     { description: "事务2", completed: false, lockTime: 2 },
     { description: "事务3", completed: false, lockTime: 1 },
     { description: "事务4", completed: false, lockTime: 5 },
-    { description: "事务5", completed: false, lockTime: 1 },
-    { description: "事务6", completed: false, lockTime: 1 },
-    { description: "事务7", completed: false, lockTime: 5 },
-    { description: "事务8", completed: false, lockTime: 1 },
-    { description: "事务9", completed: false, lockTime: 1 },
-    { description: "事务10", completed: false, lockTime: 5 },
-    { description: "事务11", completed: false, lockTime: 1 },
+    // { description: "事务5", completed: false, lockTime: 1 },
+    // { description: "事务6", completed: false, lockTime: 1 },
+    // { description: "事务7", completed: false, lockTime: 5 },
+    // { description: "事务8", completed: false, lockTime: 1 },
+    // { description: "事务9", completed: false, lockTime: 1 },
+    // { description: "事务10", completed: false, lockTime: 5 },
+    // { description: "事务11", completed: false, lockTime: 1 },
   ]
 };
 

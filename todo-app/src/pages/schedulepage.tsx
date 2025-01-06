@@ -21,15 +21,19 @@ function Schedule() {
     const [todaylist,setList] = useState(sliceList(todolist));
 
     useEffect(() => {
+        console.log('todolist',todolist)
         setList(sliceList(todolist));
-    }, [todolist]);
+    }, []);
 
 
     function TodayList({list}:{list:Record<string, TodoItem[]>}) {
         const updateTodos = (draggedIndex: number, draggedDate: string , targetDate: string, targetIndex: number, draggedItemData: TodoItem) => {
-            // 实现将拖拽的项目移动到目标列表中的逻辑
+            // 实现将拖拽的项目移动到目标列表 中的逻辑
             const newList = { ...list };
-            
+            Object.keys(newList).forEach(key => {
+                console.log(newList[key]);
+            })
+            console.log("newList----",newList);
             const draggedItems = newList[draggedDate];
             const targetItems = newList[targetDate];
 
@@ -37,10 +41,10 @@ function Schedule() {
             draggedItems.splice(draggedIndex, 1);
             // 将拖拽的项目插入到目标列表的指定位置
             targetItems.splice(targetIndex, 0, draggedItemData);
-    
-            // 更新列表，或根据需要更新状态
-            // 比如可以使用 `setList(newList)` 如果 `list` 是通过 state 管理的。
-            setList(newList);
+
+            console.log("newList",newList);
+
+            setList(sliceList(targetItems));
         };
         return (
             <div className={schstyle.content}>
