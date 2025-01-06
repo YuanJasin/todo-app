@@ -35,10 +35,6 @@ function DraggableTodoItem({ item,index,id,date,changeTodos,updateTodos,updateLo
             if (success) {
                 console.log("修改成功");
                 dispatch(setTodos(data))
-                // dispatch(updateTodoOrder({
-                //     fromId: draggedIndex,
-                //     targetId: index
-                // }));
             }else{
                 console.log("修改失败");
             }}}
